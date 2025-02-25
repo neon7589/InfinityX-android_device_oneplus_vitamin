@@ -12,13 +12,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/oneplus/vitamin/device.mk)
 
 # Inherit from the LineageOS configuration.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 PRODUCT_BRAND := OnePlus
 PRODUCT_DEVICE := vitamin
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_MODEL := CPH2493
-PRODUCT_NAME := aosp_vitamin
+PRODUCT_NAME := lineage_vitamin
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
 
