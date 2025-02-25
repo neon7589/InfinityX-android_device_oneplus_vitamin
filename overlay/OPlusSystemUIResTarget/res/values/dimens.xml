@@ -16,6 +16,8 @@
 */
 -->
 <resources>
+    <dimen name="keyguard_indication_margin_bottom">350px</dimen>
+
     <!-- the padding on the start of the statusbar -->
     <dimen name="status_bar_padding_start">60px</dimen>
 
