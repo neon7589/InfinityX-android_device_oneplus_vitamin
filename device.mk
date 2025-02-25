@@ -6,6 +6,9 @@
 # V4A
 $(call inherit-product, packages/apps/ViPER4AndroidFX/config.mk)
 
+#Dolby
+$(call inherit-product-if-exists, hardware/dolby/dolby.mk)
+
 # A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 
@@ -44,6 +47,12 @@ PRODUCT_PACKAGES += \
 # API
 BOARD_SHIPPING_API_LEVEL := 31
 PRODUCT_SHIPPING_API_LEVEL := 33
+
+# Dolby
+PRODUCT_PACKAGES += \
+    libstagefright_softomx.vendor \
+    libstagefright_softomx_plugin.vendor \
+    libsqlite.vendor
 
 # Audio
 PRODUCT_PACKAGES += \
