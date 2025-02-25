@@ -1,0 +1,128 @@
+From 6b97f4d9d0bbdc3e3735b5c1b829c6df258f03b7 Mon Sep 17 00:00:00 2001
+From: Mashopy <eliasgheeraert@gmail.com>
+Date: Fri, 24 Jan 2025 14:21:38 +0100
+Subject: [PATCH] vitamin: shitty pos can't be normal
+
+---
+ device.mk                                     |  3 ++
+ .../POSFrameworksResTarget/Android.bp         | 10 +++++++
+ .../AndroidManifest.xml                       | 15 ++++++++++
+ .../res/values/config.xml                     | 29 +++++++++++++++++++
+ .../LineageSDKResTarget/res/values/config.xml | 12 --------
+ 5 files changed, 57 insertions(+), 12 deletions(-)
+ create mode 100644 overlay-aosp/POSFrameworksResTarget/Android.bp
+ create mode 100644 overlay-aosp/POSFrameworksResTarget/AndroidManifest.xml
+ create mode 100644 overlay-aosp/POSFrameworksResTarget/res/values/config.xml
+
+diff --git a/device.mk b/device.mk
+index 4199219..c3af75f 100644
+--- a/device.mk
++++ b/device.mk
+@@ -258,6 +258,9 @@ PRODUCT_PACKAGES += \
+     LineageSettingsProviderResTarget \
+     PowerOffAlarmResTarget
+ 
++PRODUCT_PACKAGES += \
++    POSFrameworksResTarget
++
+ # Partitions
+ PRODUCT_USE_DYNAMIC_PARTITIONS := true
+ 
+diff --git a/overlay-aosp/POSFrameworksResTarget/Android.bp b/overlay-aosp/POSFrameworksResTarget/Android.bp
+new file mode 100644
+index 0000000..ce7e247
+--- /dev/null
++++ b/overlay-aosp/POSFrameworksResTarget/Android.bp
+@@ -0,0 +1,10 @@
++//
++// Copyright (C) 2024 The LineageOS Project
++//
++// SPDX-License-Identifier: Apache-2.0
++//
++
++runtime_resource_overlay {
++    name: "POSFrameworksResTarget",
++    product_specific: true,
++}
+diff --git a/overlay-aosp/POSFrameworksResTarget/AndroidManifest.xml b/overlay-aosp/POSFrameworksResTarget/AndroidManifest.xml
+new file mode 100644
+index 0000000..0cc6505
+--- /dev/null
++++ b/overlay-aosp/POSFrameworksResTarget/AndroidManifest.xml
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2025 The PixelOS Project
++    
++     SPDX-License-Identifier: Apache-2.0
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="android.overlay.pos.vitamin">
++
++    <application android:hasCode="false" />
++    <overlay
++        android:isStatic="true"
++        android:priority="350"
++        android:targetPackage="android" />
++</manifest>
+diff --git a/overlay-aosp/POSFrameworksResTarget/res/values/config.xml b/overlay-aosp/POSFrameworksResTarget/res/values/config.xml
+new file mode 100644
+index 0000000..ef844fa
+--- /dev/null
++++ b/overlay-aosp/POSFrameworksResTarget/res/values/config.xml
+@@ -0,0 +1,29 @@
++<!--
++     Copyright (C) 2015-2016 The CyanogenMod Project
++                   2017-2021 The LineageOS Project
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++          http://www.apache.org/licenses/LICENSE-2.0
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources>
++    <!-- Whether device has an alert slider -->
++    <bool name="config_hasAlertSlider" translatable="false">true</bool>
++
++    <!-- Paths to the libraries that contain device specific key handlers -->
++    <string-array name="config_deviceKeyHandlerLibs" translatable="false">
++        <item>/system_ext/app/KeyHandler/KeyHandler.apk</item>
++        <item>/system_ext/priv-app/TouchGestures/TouchGestures.apk</item>
++    </string-array>
++
++    <!-- Names of the key handler classes -->
++    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
++        <item>org.lineageos.settings.device.KeyHandler</item>
++        <item>com.android.touch.gestures.KeyHandler</item>
++    </string-array>
++</resources>
+diff --git a/overlay-lineage/LineageSDKResTarget/res/values/config.xml b/overlay-lineage/LineageSDKResTarget/res/values/config.xml
+index 4024eed..bbfd4ca 100644
+--- a/overlay-lineage/LineageSDKResTarget/res/values/config.xml
++++ b/overlay-lineage/LineageSDKResTarget/res/values/config.xml
+@@ -12,18 +12,6 @@
+      limitations under the License.
+ -->
+ <resources>
+-    <!-- Paths to the libraries that contain device specific key handlers -->
+-    <string-array name="config_deviceKeyHandlerLibs" translatable="false">
+-        <item>/system_ext/app/KeyHandler/KeyHandler.apk</item>
+-        <item>/system_ext/priv-app/LineageParts/LineageParts.apk</item>
+-    </string-array>
+-
+-    <!-- Names of the key handler classes -->
+-    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
+-        <item>org.lineageos.settings.device.KeyHandler</item>
+-        <item>org.lineageos.lineageparts.gestures.KeyHandler</item>
+-    </string-array>
+-
+     <!-- Defines the actions shown in advanced reboot submenu -->
+     <string-array name="config_restartActionsList">
+         <item>restart</item>
+-- 
+2.34.1
+
